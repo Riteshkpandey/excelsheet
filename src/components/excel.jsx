@@ -4,13 +4,12 @@ import Card from "./card";
 const Excel = () => {
   const [bgColor, setBgColor] = useState("");
   const [arr, setArr] = useState(
-    Array(9).fill({
+    Array(4).fill({
       color: "",
     })
   );
   const [showColor, setShowColor] = useState(false);
   const changeColor = (index) => {
-    console.log(showColor, index);
     setShowColor(!showColor);
     const updateColor = [...arr];
     updateColor[index] = {
@@ -31,6 +30,21 @@ const Excel = () => {
     setBgColor("bg-yellow");
   };
 
+  const generateRow = (item, index) => {
+    return (
+      <div
+        className="card"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        {[1, 2, 3, 4].map((id) => (
+          <div onClick={() => changeColor(index + id)}>
+            <Card bgcolor={item.color} />
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div>
       {showColor && (
@@ -42,8 +56,8 @@ const Excel = () => {
       )}
 
       {arr.map((item, index) => (
-        <div key={index} onClick={() => changeColor(index)}>
-          <Card bgcolor={item.color} />
+        <div style={{ display: "flex", flexDirection: "row" }} key={index}>
+          {generateRow(item, index)}
         </div>
       ))}
     </div>
